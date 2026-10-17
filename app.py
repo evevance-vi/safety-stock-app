@@ -1,4 +1,3 @@
-print("===== 我的代码开始运行了 =====")
 # app.py —— 安全库存审计与计算主入口
 # 整合 读取清洗(loader) → 审计(audit) → 计算(calc) → KPI/图表/明细 → 导出(exporter)。
 # 本文件含页面视觉美化 CSS（浅灰蓝背景、卡片、图表容器、表格样式、按钮等）。
@@ -432,46 +431,6 @@ st.markdown(
     </style>
     """,
     unsafe_allow_html=True,
-)
-
-# ===== 列菜单中文化（JavaScript 注入） =====
-st.components.v1.html(
-    """
-    <script>
-    (function() {
-        const dict = {
-            'Sort ascending':  '升序排列',
-            'Sort descending': '降序排列',
-            'Statistics':      '统计信息',
-            'Autosize':        '自动调整列宽',
-            'Autosize all columns': '自动调整所有列宽',
-            'Pin column':      '固定此列',
-            'Unpin column':    '取消固定',
-            'Hide column':     '隐藏此列',
-            'Format':          '格式化',
-            'Search':          '搜索',
-            'Reset':           '重置',
-        };
-        function translate(root) {
-            const walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT, null);
-            let node;
-            while ((node = walker.nextNode())) {
-                const t = node.nodeValue.trim();
-                if (dict[t]) node.nodeValue = node.nodeValue.replace(t, dict[t]);
-            }
-        }
-        const obs = new MutationObserver(muts => {
-            muts.forEach(m => {
-                m.addedNodes.forEach(n => {
-                    if (n.nodeType === 1) setTimeout(() => translate(n), 30);
-                });
-            });
-        });
-        obs.observe(document.body, {childList: true, subtree: true});
-    })();
-    </script>
-    """,
-    height=0,
 )
 
 st.title('安全库存审计与计算')
